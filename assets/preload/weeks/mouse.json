@@ -1,0 +1,31 @@
+{
+	"storyName": "come inside its fun INSIDE!",
+	"difficulties": "",
+	"hideFreeplay": false,
+	"weekBackground": "monk",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"hideStoryMode": false,
+	"songs": [
+		[
+			"legacy-avi",
+			"mouse",
+			[
+				146,
+				113,
+				73
+			]
+		]
+	],
+	"weekCharacters": [
+		"mokey",
+		"bf",
+		"gf"
+	],
+	"weekName": "Pibby mouse"
+}

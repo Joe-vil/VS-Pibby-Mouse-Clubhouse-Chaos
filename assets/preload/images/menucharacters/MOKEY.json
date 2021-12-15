@@ -1,0 +1,11 @@
+{
+	
+	"image": "Menu_MOKEY",
+	"position": [
+		290,
+		170
+	],
+	"scale": 0.6,
+	"idle_anim": "idle",
+	"confirm_anim": "idle"
+}

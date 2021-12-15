@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="mickeybackground.png">
+	<!-- Created with Adobe Animate version 19.0.0.326 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="clouds0000" x="3" y="2491" width="1708" height="1063" frameX="0" frameY="-154" frameWidth="2232" frameHeight="1298"/>
+	<SubTexture name="clouds0001" x="1608" y="3" width="1655" height="1205" frameX="-170" frameY="-32" frameWidth="2232" frameHeight="1298"/>
+	<SubTexture name="clouds0002" x="3" y="3" width="1602" height="1258" frameX="-345" frameY="0" frameWidth="2232" frameHeight="1298"/>
+	<SubTexture name="clouds0003" x="3" y="1264" width="1549" height="1224" frameX="-517" frameY="-54" frameWidth="2232" frameHeight="1298"/>
+	<SubTexture name="clouds0004" x="1608" y="1211" width="1616" height="1110" frameX="-616" frameY="-188" frameWidth="2232" frameHeight="1298"/>
+	<SubTexture name="clouds0005" x="1714" y="2324" width="1573" height="1063" frameX="-481" frameY="-154" frameWidth="2232" frameHeight="1298"/>
+	<SubTexture name="clouds0006" x="1714" y="2324" width="1573" height="1063" frameX="-481" frameY="-154" frameWidth="2232" frameHeight="1298"/>
+	<SubTexture name="clouds0007" x="1714" y="2324" width="1573" height="1063" frameX="-481" frameY="-154" frameWidth="2232" frameHeight="1298"/>
+</TextureAtlas>
