@@ -1,0 +1,39 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.005,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "mokey plz dont kill me!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "also you have a fire voice lmao"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "monkey",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "bf i loved your voice too! <3"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "wanna sing one more time? <3"
+		},
+		{
+			"speed": 0.01,
+			"portrait": "monkey",
+			"boxState": "angry",
+			"expression": "shocked",
+			"text": "YES PLZ!!!!!"
+		}
+	]
+}

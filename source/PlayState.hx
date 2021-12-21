@@ -920,6 +920,9 @@ class PlayState extends MusicBeatState
 				case 'legacy-avi':
 					startVideo('mouseavi');
 
+				case 'pibby-roll':
+					startDialogue(dialogueJson);
+
 				default:
 					startCountdown();
 			}
