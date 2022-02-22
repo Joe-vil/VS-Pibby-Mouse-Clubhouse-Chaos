@@ -98,6 +98,13 @@ class Note extends FlxSprite
 						missHealth = 0.50;
 					}
 					hitCausesMiss = true;
+				case 'Funny video':
+					ignoreNote = mustPress;
+					reloadNote('HURT');
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					missHealth = 0;
 				case 'No Animation':
 					noAnimation = true;
 			}
