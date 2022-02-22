@@ -3,21 +3,26 @@
 	"difficulties": "",
 	"hideFreeplay": false,
 	"weekBackground": "monk",
+	"weekBefore": "tutorial",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
-	"weekBefore": "tutorial",
 	"startUnlocked": true,
-	"weekCharacters": [
-		"mokey",
-		"bf",
-		"gf"
-	],
+	"hideStoryMode": false,
 	"songs": [
 		[
 			"legacy-avi",
+			"mouse",
+			[
+				146,
+				113,
+				73
+			]
+		],
+		[
+			"welcome",
 			"mouse",
 			[
 				146,
@@ -35,6 +40,10 @@
 			]
 		]
 	],
-	"hideStoryMode": false,
+	"weekCharacters": [
+		"mokey",
+		"bf",
+		"gf"
+	],
 	"weekName": "Pibby mouse"
 }
