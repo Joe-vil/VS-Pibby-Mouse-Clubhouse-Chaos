@@ -220,6 +220,7 @@ class PlayState extends MusicBeatState
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
+	public var youtubeTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
@@ -796,6 +797,13 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
+		youtubeTxt = new FlxText(400, 400, 400, '', 60);
+		youtubeTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		youtubeTxt.scrollFactor.set();
+		youtubeTxt.borderSize = 1.25;
+		youtubeTxt.visible = !ClientPrefs.hideHud;
+		add(youtubeTxt);
+
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
@@ -814,6 +822,7 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		youtubeTxt.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
@@ -2421,6 +2430,9 @@ class PlayState extends MusicBeatState
 				jumpscare(Std.parseFloat(value1), Std.parseFloat(value2));
 				FlxG.sound.play(Paths.sound('jumpscare'), 10);
 
+			case 'youtube DUMP':
+				openYouTube();
+
 			case 'Hey!':
 				var value:Int = 2;
 				switch(value1.toLowerCase().trim()) {
@@ -3584,6 +3596,10 @@ class PlayState extends MusicBeatState
 							boyfriend.specialAnim = true;
 							
 						}
+					case 'Funny video':
+						timeshit + 1;
+						youtubeTxt.text = 'Hacks: ' + timeshit;
+						trace('timeshit');
 				}
 				
 				note.wasGoodHit = true;
@@ -3663,6 +3679,25 @@ class PlayState extends MusicBeatState
 				note.destroy();
 			}
 		}
+	}
+
+	var timeshit:Int = 0;
+
+	function openYouTube(elapsed:Float) 
+		{
+			// super.update(elapsed);
+			youtubeTxt.text = 'Hacks: ' + timeshit;
+			timeshit - 1;
+			CoolUtil.browserLoad('https://www.youtube.com/watch?v=J128RUFa5OU&ab_channel=LuckyBot');
+			FlxG.sound.play(Paths.sound('jumpscare'), 10);
+			if (timeshit > 0)
+				{
+					openYouTube();
+				}
+			else
+				{
+					FlxG.sound.play(Paths.sound('jumpscare'), 10);
+				}
 	}
 
 	function spawnNoteSplashOnNote(note:Note) {
