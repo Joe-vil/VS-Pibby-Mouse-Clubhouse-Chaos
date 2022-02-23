@@ -220,7 +220,20 @@ class PlayState extends MusicBeatState
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
+
+
 	public var youtubeTxt:FlxText;
+	public var removeTxt:FlxText;
+	public var warnTxt:FlxText;
+
+	public var timeshit:Float = 0;
+	public var beatamount:Float = 0;
+	public var youtubeDUMP:Bool = false;
+	public var endDUMP:Bool = false;
+
+	var rat:BGSprite;
+
+
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
@@ -797,12 +810,42 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
-		youtubeTxt = new FlxText(400, 400, 400, '', 60);
-		youtubeTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		youtubeTxt.scrollFactor.set();
-		youtubeTxt.borderSize = 1.25;
-		youtubeTxt.visible = !ClientPrefs.hideHud;
-		add(youtubeTxt);
+		if(curStage == 'club-house')
+			{
+				rat = new BGSprite('mose/rat', FlxG.width / 2 - 120.5, 250, 0, 0);
+				rat.antialiasing = true;
+				rat.visible = false;
+				add(rat);
+
+				warnTxt = new FlxText(FlxG.width / 2 - 200, 400, 400, 'Infestation Notes! Dont get to 10 or pibby mouse will win!', 400);
+				warnTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				warnTxt.scrollFactor.set();
+				warnTxt.borderSize = 1.25;
+				add(warnTxt);
+
+				removeTxt = new FlxText(warnTxt.x, warnTxt.y + 30, 400, 'Want to remove them now? Press 9! you can only do this once!', 700);
+				removeTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				removeTxt.scrollFactor.set();
+				removeTxt.borderSize = 1.25;
+				removeTxt.visible = false;
+				add(removeTxt);
+
+				youtubeTxt = new FlxText(warnTxt.x, warnTxt.y - 30, 400, '', 400);
+				youtubeTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				youtubeTxt.scrollFactor.set();
+				youtubeTxt.borderSize = 1.25;
+				add(youtubeTxt);
+
+				FlxTween.tween(youtubeTxt, {x: 440, y: 170}, 2, {startDelay: 1,ease: FlxEase.linear});
+				FlxTween.tween(warnTxt, {x: FlxG.width / 2 - 200, y: 200}, 2, {startDelay: 1,ease: FlxEase.linear});
+
+				FlxG.sound.play(Paths.sound('Alarm sound effect'), 10);
+
+				rat.cameras = [camHUD];
+				youtubeTxt.cameras = [camHUD];
+				removeTxt.cameras = [camHUD];
+				warnTxt.cameras = [camHUD];
+			}
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -822,7 +865,6 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
-		youtubeTxt.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
@@ -1967,6 +2009,60 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
+
+
+
+		if (FlxG.keys.justPressed.P)
+			{
+				timeshit += 1;
+			}
+			
+
+		youtubeTxt.text = 'Mouse Infestation: ' + timeshit;
+
+		var onetimething:Bool = false;
+
+		if (FlxG.keys.justPressed.NINE && !onetimething && timeshit > 8)
+			{
+				youtubeDUMP = true;
+				onetimething = true;
+			}
+
+		if (timeshit > 8)
+			{
+				beatamount = 0.850;
+				youtubeTxt.color = 0xfff96d63;
+				removeTxt.visible = true;
+				rat.visible = true;
+			}
+		else
+			{
+				beatamount = 0.015;
+				youtubeTxt.color = 0xffffffff;
+				removeTxt.visible = false;
+				rat.visible = false;
+			}
+
+		if (timeshit > 0 && youtubeDUMP)
+			{
+				timeshit -= 1;
+				CoolUtil.browserLoad('https://www.youtube.com/watch?v=J128RUFa5OU&ab_channel=LuckyBot');
+				FlxG.sound.play(Paths.sound('jumpscare'), 10);
+			}
+		else
+			{
+				youtubeDUMP = false;
+			}
+
+		if (timeshit > 0 && endDUMP)
+			{
+				timeshit -= 1;
+				CoolUtil.browserLoad('https://www.youtube.com/watch?v=J128RUFa5OU&ab_channel=LuckyBot');
+				FlxG.sound.play(Paths.sound('jumpscare'), 10);
+			}
+
+
+
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
 		} else {
@@ -2431,7 +2527,7 @@ class PlayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('jumpscare'), 10);
 
 			case 'youtube DUMP':
-				openYouTube();
+				endDUMP = true;
 
 			case 'Hey!':
 				var value:Int = 2;
@@ -3589,17 +3685,18 @@ class PlayState extends MusicBeatState
 					spawnNoteSplashOnNote(note);
 				}
 
-				switch(note.noteType) {
+				switch(note.noteType) 
+				{
 					case 'Hurt Note': //Hurt note
-						if(boyfriend.animation.getByName('hurt') != null) {
+						if(boyfriend.animation.getByName('hurt') != null) 
+						{
 							boyfriend.playAnim('hurt', true);
 							boyfriend.specialAnim = true;
-							
 						}
-					case 'Funny video':
-						timeshit + 1;
-						youtubeTxt.text = 'Hacks: ' + timeshit;
-						trace('timeshit');
+					
+					case 'Funny Note':
+						FlxG.sound.play(Paths.sound('car horn'), 10);
+						timeshit += 1;
 				}
 				
 				note.wasGoodHit = true;
@@ -3681,24 +3778,11 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	var timeshit:Int = 0;
-
-	function openYouTube(elapsed:Float) 
+	function dumbAssFuckyFix()
 		{
-			// super.update(elapsed);
-			youtubeTxt.text = 'Hacks: ' + timeshit;
-			timeshit - 1;
-			CoolUtil.browserLoad('https://www.youtube.com/watch?v=J128RUFa5OU&ab_channel=LuckyBot');
-			FlxG.sound.play(Paths.sound('jumpscare'), 10);
-			if (timeshit > 0)
-				{
-					openYouTube();
-				}
-			else
-				{
-					FlxG.sound.play(Paths.sound('jumpscare'), 10);
-				}
-	}
+			timeshit += 1;
+			trace('PIBBY NOTES!!!!!!!!');
+		}
 
 	function spawnNoteSplashOnNote(note:Note) {
 		if(ClientPrefs.noteSplashes && note != null) {
@@ -3973,8 +4057,8 @@ class PlayState extends MusicBeatState
 
 			if (curStage == 'club-house' && camZooming && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && curBeat % 4 == 0)
 			{
-				FlxG.camera.zoom += 0.100;
-				camHUD.zoom += 0.2;
+				FlxG.camera.zoom += beatamount;
+				camHUD.zoom += beatamount;
 			}
 			else if (camZooming && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && curBeat % 4 == 0)
 			{
