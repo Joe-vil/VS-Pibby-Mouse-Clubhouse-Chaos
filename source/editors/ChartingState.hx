@@ -83,7 +83,7 @@ class ChartingState extends MusicBeatState
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Target value\nValue 2: Time it takes to change fully"],
 		['shit ass jump scare', "ass"],
-		['youtube DUMP', "dumps youtube load"]
+		['Pibby run', "dumps u"]
 	];
 
 	var _file:FileReference;

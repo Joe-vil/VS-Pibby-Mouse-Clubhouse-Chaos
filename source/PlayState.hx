@@ -231,7 +231,7 @@ class PlayState extends MusicBeatState
 	public var youtubeDUMP:Bool = false;
 	public var endDUMP:Bool = false;
 
-	var rat:BGSprite;
+	var graspacebar:FlxSprite;
 
 
 	var timeTxt:FlxText;
@@ -618,7 +618,7 @@ class PlayState extends MusicBeatState
 				boyfriend.y = 616.05;
 				gf.x = 1281.65;
 				gf.y = 267.05;
-				dad.x = 180.4;
+				dad.x = 50;
 				dad.y = 393.65;
 				gf.scrollFactor.set(1, 1);
 		}
@@ -812,39 +812,16 @@ class PlayState extends MusicBeatState
 
 		if(curStage == 'club-house')
 			{
-				rat = new BGSprite('mose/rat', FlxG.width / 2 - 120.5, 250, 0, 0);
-				rat.antialiasing = true;
-				rat.visible = false;
-				add(rat);
+				graspacebar = new FlxSprite(0, 0);
+				graspacebar.frames = Paths.getSparrowAtlas('mose/space_bar');
+				graspacebar.animation.addByPrefix('ready', 'space bar', 24);
+				graspacebar.animation.addByPrefix('Go', 'HIT space bar', 24);
+				graspacebar.animation.play('ready');
+				graspacebar.visible = false;
+				graspacebar.screenCenter();
+				add(graspacebar);
 
-				warnTxt = new FlxText(FlxG.width / 2 - 200, 400, 400, 'Infestation Notes! Dont get to 10 or pibby mouse will win!', 400);
-				warnTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-				warnTxt.scrollFactor.set();
-				warnTxt.borderSize = 1.25;
-				add(warnTxt);
-
-				removeTxt = new FlxText(warnTxt.x, warnTxt.y + 30, 400, 'Want to remove them now? Press 9! you can only do this once!', 700);
-				removeTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-				removeTxt.scrollFactor.set();
-				removeTxt.borderSize = 1.25;
-				removeTxt.visible = false;
-				add(removeTxt);
-
-				youtubeTxt = new FlxText(warnTxt.x, warnTxt.y - 30, 400, '', 400);
-				youtubeTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-				youtubeTxt.scrollFactor.set();
-				youtubeTxt.borderSize = 1.25;
-				add(youtubeTxt);
-
-				FlxTween.tween(youtubeTxt, {x: 440, y: 170}, 2, {startDelay: 1,ease: FlxEase.linear});
-				FlxTween.tween(warnTxt, {x: FlxG.width / 2 - 200, y: 200}, 2, {startDelay: 1,ease: FlxEase.linear});
-
-				FlxG.sound.play(Paths.sound('Alarm sound effect'), 10);
-
-				rat.cameras = [camHUD];
-				youtubeTxt.cameras = [camHUD];
-				removeTxt.cameras = [camHUD];
-				warnTxt.cameras = [camHUD];
+				graspacebar.cameras = [camHUD];
 			}
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
@@ -2009,60 +1986,6 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-
-
-
-		if (FlxG.keys.justPressed.P)
-			{
-				timeshit += 1;
-			}
-			
-
-		youtubeTxt.text = 'Mouse Infestation: ' + timeshit;
-
-		var onetimething:Bool = false;
-
-		if (FlxG.keys.justPressed.NINE && !onetimething && timeshit > 8)
-			{
-				youtubeDUMP = true;
-				onetimething = true;
-			}
-
-		if (timeshit > 8)
-			{
-				beatamount = 0.850;
-				youtubeTxt.color = 0xfff96d63;
-				removeTxt.visible = true;
-				rat.visible = true;
-			}
-		else
-			{
-				beatamount = 0.015;
-				youtubeTxt.color = 0xffffffff;
-				removeTxt.visible = false;
-				rat.visible = false;
-			}
-
-		if (timeshit > 0 && youtubeDUMP)
-			{
-				timeshit -= 1;
-				CoolUtil.browserLoad('https://www.youtube.com/watch?v=J128RUFa5OU&ab_channel=LuckyBot');
-				FlxG.sound.play(Paths.sound('jumpscare'), 10);
-			}
-		else
-			{
-				youtubeDUMP = false;
-			}
-
-		if (timeshit > 0 && endDUMP)
-			{
-				timeshit -= 1;
-				CoolUtil.browserLoad('https://www.youtube.com/watch?v=J128RUFa5OU&ab_channel=LuckyBot');
-				FlxG.sound.play(Paths.sound('jumpscare'), 10);
-			}
-
-
-
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
 		} else {
@@ -2374,6 +2297,8 @@ class PlayState extends MusicBeatState
 		}
 		checkEventNote();
 
+		spaceBarHit();
+
 		if (!inCutscene) {
 			if(!cpuControlled) {
 				keyShit();
@@ -2519,6 +2444,46 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	var spacebarCanHit:Bool = false;
+	var goodHitTrue:Bool = false;
+
+	function pibbyRUN()
+		{
+			graspacebar.visible = true;
+			new FlxTimer().start(1.5, function(tmr:FlxTimer)
+				{
+					spacebarCanHit = true;
+					FlxTween.tween(dad, {x: boyfriend.x, y: boyfriend.y}, 0.5, {ease: FlxEase.smoothStepInOut});
+					graspacebar.animation.play('Go', true);
+					new FlxTimer().start(0.7, function(tmr:FlxTimer)
+						{
+							if(goodHitTrue)
+								{
+									FlxG.sound.play(Paths.sound('jumpscare'), 10);
+									graspacebar.animation.play('ready', true);
+									graspacebar.visible = false;
+									FlxTween.tween(dad, {x: 50, y: 393.65}, 0.5, {ease: FlxEase.smoothStepInOut});
+								}
+							else
+								{
+									health = 0;
+								}
+						});
+				});
+			// if(sapcebar.animation.curAnim.name = 'GO')
+		}
+
+		function spaceBarHit()
+			{
+				if(FlxG.keys.justPressed.SPACE && spacebarCanHit)
+					{
+						boyfriend.playAnim('HAMMER', true);
+						boyfriend.specialAnim = true;
+						spacebarCanHit = false;
+						goodHitTrue = true;
+					}
+			}
+
 	public function triggerEventNote(eventName:String, value1:String, value2:String) {
 		switch(eventName) {
 
@@ -2526,8 +2491,8 @@ class PlayState extends MusicBeatState
 				jumpscare(Std.parseFloat(value1), Std.parseFloat(value2));
 				FlxG.sound.play(Paths.sound('jumpscare'), 10);
 
-			case 'youtube DUMP':
-				endDUMP = true;
+			case 'Pibby run':
+				pibbyRUN();
 
 			case 'Hey!':
 				var value:Int = 2;
@@ -3696,7 +3661,6 @@ class PlayState extends MusicBeatState
 					
 					case 'Funny Note':
 						FlxG.sound.play(Paths.sound('car horn'), 10);
-						timeshit += 1;
 				}
 				
 				note.wasGoodHit = true;

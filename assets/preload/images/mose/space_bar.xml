@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="space_bar.png">
+	<!-- Created with Adobe Animate version 19.0.0.326 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="HIT space bar0000" x="3" y="131" width="695" height="83"/>
+	<SubTexture name="HIT space bar0001" x="3" y="131" width="695" height="83"/>
+	<SubTexture name="HIT space bar0002" x="3" y="131" width="695" height="83"/>
+	<SubTexture name="HIT space bar0003" x="3" y="217" width="643" height="81" frameX="-26" frameY="-2" frameWidth="695" frameHeight="83"/>
+	<SubTexture name="HIT space bar0004" x="3" y="217" width="643" height="81" frameX="-26" frameY="-2" frameWidth="695" frameHeight="83"/>
+	<SubTexture name="HIT space bar0005" x="3" y="217" width="643" height="81" frameX="-26" frameY="-2" frameWidth="695" frameHeight="83"/>
+	<SubTexture name="space bar0000" x="3" y="3" width="626" height="125"/>
+</TextureAtlas>
